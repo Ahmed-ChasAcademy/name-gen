@@ -84,7 +84,6 @@ export default function Header() {
 
   const toggleTheme = () => {
     setIsDark(!isDark);
-    // Add your theme logic here
     document.documentElement.classList.toggle('dark');
   };
 
@@ -126,7 +125,7 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-1">
+          <nav className="hidden md:flex space-x-1 items-center">
             <Link
               href="/"
               className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 font-medium rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 border border-transparent hover:border-purple-200 dark:hover:border-purple-800"
@@ -188,11 +187,13 @@ export default function Header() {
               </div>
             ))}
             
+            {/* Better AI Generate Button */}
             <Link
               href="/generate"
-              className="px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white transition-all duration-300 font-medium rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-purple-400/20"
+              className="ml-2 px-6 py-2.5 bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white transition-all duration-300 font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-purple-400/20 flex items-center space-x-2 group/ai"
             >
-              ✨ AI Generate
+              <span className="group-hover/ai:scale-110 transition-transform duration-300">✨</span>
+              <span>AI Generate</span>
             </Link>
           </nav>
 
@@ -266,10 +267,11 @@ export default function Header() {
               
               <Link
                 href="/generate"
-                className="block bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white transition-all duration-300 font-medium py-3 px-4 rounded-lg shadow-lg text-center border border-purple-400/20"
+                className="block bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 text-white transition-all duration-300 font-semibold py-3 px-4 rounded-lg shadow-lg text-center border border-purple-400/20 flex items-center justify-center space-x-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                ✨ AI Generate
+                <span>✨</span>
+                <span>AI Generate</span>
               </Link>
             </div>
           </div>
