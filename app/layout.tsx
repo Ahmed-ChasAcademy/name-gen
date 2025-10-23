@@ -18,6 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Add this script tag in the head */}
+        <script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9301068184242972"
+        />
+      </head>
       <body>
         <NameProvider>
           <Header />
