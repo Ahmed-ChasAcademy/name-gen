@@ -1,101 +1,101 @@
 .footer {
-  background-color: #fafafa;
-  border-top: 1px solid #e5e7eb;
-  margin-top: auto;
-}
-
-.footerContent {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2.5rem 2rem;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1.5rem 0;
 }
 
 .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footerContent {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
+  gap: 1rem;
 }
 
-.brand {
+/* Logo */
+.logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
-.logo {
-  font-size: 1.25rem;
+.logoIcon {
+  font-size: 1.5rem;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logoPrimary {
+  font-size: 1em;
+  color: white;
+}
+
+.logoSecondary {
+  font-size: 0.8em;
+  color: #e3f2fd;
+  opacity: 0.9;
   font-weight: 600;
-  color: #1f2937;
 }
 
-.copyright {
-  color: #6b7280;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-
-.heart {
-  color: #dc2626;
-  margin: 0 0.25rem;
-}
-
+/* Links */
 .links {
   display: flex;
-  gap: 2.5rem;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .link {
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: color 0.2s ease;
-  position: relative;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
 }
 
 .link:hover {
-  color: #1f2937;
+  color: white;
 }
 
-.link::before {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
-  left: 50%;
-  background-color: #1f2937;
+.donateLink {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   transition: all 0.2s ease;
-  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.link:hover::before {
-  width: 100%;
+.donateLink:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
 }
 
-.divider {
-  color: #d1d5db;
-  margin: 0 0.5rem;
-}
-
-/* Responsive Design */
+/* Mobile */
 @media (max-width: 768px) {
   .footerContent {
-    padding: 2rem 1.5rem;
-  }
-  
-  .container {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
     text-align: center;
   }
   
-  .brand {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
   .links {
-    gap: 2rem;
+    gap: 1rem;
   }
 }

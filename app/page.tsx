@@ -8,7 +8,7 @@ export default function Home() {
     { name: 'Kingdoms', href: '/names/kingdom-names', className: styles.kingdoms },
     { name: 'Vampires', href: '/names/vampire-names', className: styles.vampires },
     { name: 'Robots', href: '/names/robot-names', className: styles.robots },
-    { name: 'Gods', href: '/names/god-names', className: styles.gods },
+    { name: 'Horses', href: '/names/horses-names', className: styles.horses },
     { name: 'Superheroes', href: '/names/superhero-names', className: styles.superheroes },
   ];
 

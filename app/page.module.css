@@ -19,7 +19,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('/hero.jpg') center/cover;
+  background: url('/hero.jpg') center calc(50% + 100px)/cover;
+
   opacity: 0.5;
 }
 
@@ -49,14 +50,14 @@
 .title {
   font-size: 3rem;
   font-weight: 700;
-  color: #1a202c;
+  color: #ffffff;
   margin-bottom: 1.5rem;
   line-height: 1.1;
 }
 
 .subtitle {
   font-size: 1.25rem;
-  color: #4a5568;
+  color: #ffffff;
   margin-bottom: 3rem;
   line-height: 1.6;
 }
@@ -215,7 +216,7 @@
   background-image: url('/robot.jpg');
 }
 
-.gods::before {
+.horses::before {
   background-image: url('/gods.jpg');
 }
 

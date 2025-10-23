@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.css';
 
 const mainCategories = {
@@ -56,18 +56,32 @@ const mainCategories = {
 };
 
 export default function Header() {
-  const [isDark, setIsDark] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const dropdownRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
-  };
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const getCategoryUrl = (categoryName: string) => {
     return `/names/${categoryName.toLowerCase().replace(/\s+/g, '-')}`;
+  };
+
+  const toggleDropdown = (category: string) => {
+    setActiveDropdown(activeDropdown === category ? null : category);
+  };
+
+  const closeDropdown = () => {
+    setActiveDropdown(null);
   };
 
   return (
@@ -75,14 +89,18 @@ export default function Header() {
       <div className={styles.container}>
         <div className={styles.nav}>
           {/* Logo */}
-          <Link href="/" className={styles.logo}>
-            <div className={styles.logoIcon}>FN</div>
-            <div className={styles.logoText}>FantasyNames</div>
+          <Link href="/" className={styles.logo} onClick={closeDropdown}>
+            <div className={styles.logoIcon}>⚔️</div>
+            <div className={styles.logoText}>
+              <span className={styles.logoPrimary}>Fantasy</span>
+              <span className={styles.logoSecondary}>Names</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className={styles.desktopNav}>
-            <Link href="/" className={styles.navLink}>
+          <nav className={styles.desktopNav} ref={dropdownRef}>
+            <Link href="/" className={styles.navLink} onClick={closeDropdown}>
+              <span className={styles.navIcon}>🏠</span>
               Home
             </Link>
             
@@ -90,13 +108,21 @@ export default function Header() {
               <div 
                 key={category}
                 className={styles.dropdown}
-                ref={el => { dropdownRefs.current[category] = el; }}
-                onMouseEnter={() => setActiveDropdown(category)}
-                onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className={styles.navButton}>
+                <button 
+                  className={`${styles.navButton} ${activeDropdown === category ? styles.navButtonActive : ''}`}
+                  onClick={() => toggleDropdown(category)}
+                >
+                  <span className={styles.navIcon}>
+                    {category === 'Fantasy' && '🧙'}
+                    {category === 'Characters' && '👤'}
+                    {category === 'Worlds' && '🌍'}
+                    {category === 'Modern' && '🚀'}
+                  </span>
                   {category}
-                  <span className={styles.chevron}>▼</span>
+                  <span className={`${styles.chevron} ${activeDropdown === category ? styles.chevronActive : ''}`}>
+                    ▼
+                  </span>
                 </button>
 
                 {activeDropdown === category && (
@@ -104,17 +130,23 @@ export default function Header() {
                     <div className={styles.dropdownGrid}>
                       {Object.entries(mainCategories[category as keyof typeof mainCategories]).map(([subcategory, items]) => (
                         <div key={subcategory} className={styles.dropdownSection}>
-                          <h3 className={styles.dropdownTitle}>{subcategory}</h3>
-                          {items.map((item) => (
-                            <Link
-                              key={item}
-                              href={getCategoryUrl(item)}
-                              className={styles.dropdownItem}
-                              onClick={() => setActiveDropdown(null)}
-                            >
-                              {item}
-                            </Link>
-                          ))}
+                          <h4 className={styles.dropdownTitle}>
+                            <span className={styles.subcategoryIcon}>▸</span>
+                            {subcategory}
+                          </h4>
+                          <div className={styles.dropdownItems}>
+                            {items.map((item) => (
+                              <Link
+                                key={item}
+                                href={getCategoryUrl(item)}
+                                className={styles.dropdownItem}
+                                onClick={closeDropdown}
+                              >
+                                <span className={styles.itemIcon}>•</span>
+                                {item}
+                              </Link>
+                            ))}
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -123,23 +155,18 @@ export default function Header() {
               </div>
             ))}
             
-            <Link href="/generate" className={styles.primaryButton}>
+            <Link href="/generate" className={styles.primaryButton} onClick={closeDropdown}>
+              <span className={styles.buttonIcon}>✨</span>
               AI Generate
+              <span className={styles.buttonBadge}>NEW</span>
             </Link>
           </nav>
 
-          {/* Right Side */}
+          {/* Mobile Menu Button */}
           <div className={styles.rightSection}>
             <button
-              onClick={toggleTheme}
-              className={styles.themeButton}
-            >
-              {isDark ? '☀️' : '🌙'}
-            </button>
-
-            <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={styles.mobileMenuButton}
+              className={`${styles.mobileMenuButton} ${isMobileMenuOpen ? styles.mobileMenuButtonActive : ''}`}
             >
               <span className={styles.mobileMenuLine}></span>
               <span className={styles.mobileMenuLine}></span>
@@ -151,44 +178,80 @@ export default function Header() {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className={styles.mobileMenu}>
+            <div className={styles.mobileMenuHeader}>
+              <h3>Navigation Menu</h3>
+              <button 
+                className={styles.mobileMenuClose}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            
             <div className={styles.mobileNav}>
               <Link
                 href="/"
-                className={styles.navLink}
+                className={styles.mobileNavLink}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
+                <span className={styles.mobileNavIcon}>🏠</span>
                 Home
               </Link>
               
               {Object.entries(mainCategories).map(([category, subcategories]) => (
                 <div key={category} className={styles.mobileCategory}>
-                  <h3 className={styles.mobileCategoryTitle}>{category}</h3>
-                  {Object.entries(subcategories).map(([subcategory, items]) => (
-                    <div key={subcategory} className={styles.mobileSubcategory}>
-                      <h4 className={styles.mobileSubcategoryTitle}>{subcategory}</h4>
-                      <div className={styles.mobileItemsGrid}>
-                        {items.map(item => (
-                          <Link
-                            key={item}
-                            href={getCategoryUrl(item)}
-                            className={styles.mobileItem}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            {item}
-                          </Link>
-                        ))}
+                  <button 
+                    className={styles.mobileCategoryButton}
+                    onClick={(e) => {
+                      const button = e.currentTarget;
+                      const content = button.nextElementSibling as HTMLElement;
+                      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                    }}
+                  >
+                    <span className={styles.mobileCategoryIcon}>
+                      {category === 'Fantasy' && '🧙'}
+                      {category === 'Characters' && '👤'}
+                      {category === 'Worlds' && '🌍'}
+                      {category === 'Modern' && '🚀'}
+                    </span>
+                    {category}
+                    <span className={styles.mobileChevron}>▼</span>
+                  </button>
+                  
+                  <div className={styles.mobileCategoryContent}>
+                    {Object.entries(subcategories).map(([subcategory, items]) => (
+                      <div key={subcategory} className={styles.mobileSubcategory}>
+                        <h4 className={styles.mobileSubcategoryTitle}>
+                          <span className={styles.mobileSubcategoryIcon}>▸</span>
+                          {subcategory}
+                        </h4>
+                        <div className={styles.mobileItemsGrid}>
+                          {items.map(item => (
+                            <Link
+                              key={item}
+                              href={getCategoryUrl(item)}
+                              className={styles.mobileItem}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <span className={styles.mobileItemIcon}>•</span>
+                              {item}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               ))}
               
               <Link
                 href="/generate"
-                className={styles.primaryButton}
+                className={styles.mobilePrimaryButton}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
+                <span className={styles.mobileButtonIcon}>✨</span>
                 AI Generate
+                <span className={styles.mobileButtonBadge}>NEW</span>
               </Link>
             </div>
           </div>
