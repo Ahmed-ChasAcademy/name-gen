@@ -1,0 +1,282 @@
+.container {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+/* Hero Section */
+.hero {
+  padding: 6rem 1rem 4rem;
+  text-align: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.heroContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #4a5568;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  background: #1a202c;
+  color: white;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 2px solid #1a202c;
+}
+
+.primaryButton:hover {
+  background: #2d3748;
+  transform: translateY(-1px);
+}
+
+.secondaryButton {
+  background: white;
+  color: #1a202c;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 2px solid #e2e8f0;
+}
+
+.secondaryButton:hover {
+  border-color: #1a202c;
+  transform: translateY(-1px);
+}
+
+/* Categories Section */
+.categories {
+  padding: 5rem 1rem;
+  background: white;
+}
+
+.categoriesContent {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #1a202c;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.categoryCard {
+  background: white;
+  padding: 2rem 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categoryCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3; /* Increased from 0.1 to 0.3 for better visibility */
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.categoryCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.75) 100%);
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.categoryCard:hover::before {
+  opacity: 1; /* Increased from 0.2 to 0.5 for better hover effect */
+}
+
+.categoryCard:hover::after {
+  background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.6) 100%);
+}
+
+.categoryName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin: 0;
+  position: relative;
+  z-index: 3;
+  transition: transform 0.3s ease;
+}
+
+.categoryCard:hover .categoryName {
+  transform: scale(1.2);
+}
+
+/* Specific background images for each category */
+.elves::before {
+  background-image: url('/elf.webp');
+}
+
+.dragons::before {
+  background-image: url('/dragon.jpg');
+}
+
+.wizards::before {
+  background-image: url('/wizard.jpg');
+}
+
+.kingdoms::before {
+  background-image: url('/kingdom.jpg');
+}
+
+.vampires::before {
+  background-image: url('/vampire.jpg');
+}
+
+.robots::before {
+  background-image: url('/robot.jpg');
+}
+
+.gods::before {
+  background-image: url('/gods.jpg');
+}
+
+.superheroes::before {
+  background-image: url('/superhero.webp');
+}
+
+.categoryCard:hover {
+  border-color: #1a202c;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Stats Section */
+.stats {
+  padding: 4rem 1rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.statsContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1rem 3rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .buttonGroup {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .categoryCard {
+    min-height: 100px;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1.125rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,10 +1,10 @@
-// app/generate/page.tsx
 'use client';
 
 import React, { useState, useCallback } from 'react';
+import styles from './page.module.css';
 
 export default function GeneratePage() {
-    // --- State Management ---
+    // State Management
     const [criteria, setCriteria] = useState('');
     const [count, setCount] = useState(5);
     const [wordCount, setWordCount] = useState<'any' | 1 | 2 | 3>('any');
@@ -15,11 +15,7 @@ export default function GeneratePage() {
     const [results, setResults] = useState<string[]>([]);
     const [copiedName, setCopiedName] = useState<string | null>(null);
 
-    // --- Utility Functions ---
-
-    /**
-     * Handles copying a name to the clipboard
-     */
+    // Utility Functions
     const handleCopy = async (name: string) => {
         try {
             await navigator.clipboard.writeText(name);
@@ -39,22 +35,17 @@ export default function GeneratePage() {
         }
     };
 
-    /**
-     * Handles the API call to generate names
-     */
     const generateNames = useCallback(async () => {
         if (!criteria.trim()) {
             setError("Please enter criteria for the names you want to generate.");
             return;
         }
 
-        // Reset UI state
         setError(null);
         setResults([]);
         setIsLoading(true);
 
         try {
-            // Call your API route
             const response = await fetch('/api/generate', {
                 method: 'POST',
                 headers: {
@@ -89,34 +80,34 @@ export default function GeneratePage() {
     }, [criteria, count, wordCount, nameStyle, customStyle]);
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={styles.container}>
+            <div className={styles.content}>
                 {/* Header */}
-                <div className="text-center mb-10">
-                    <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                <div className={styles.header}>
+                    <h1 className={styles.title}>
                         AI Fantasy Name Generator
                     </h1>
-                    <p className="text-xl text-gray-600 dark:text-gray-400">
+                    <p className={styles.subtitle}>
                         Create unique names with artificial intelligence
                     </p>
                 </div>
 
                 {/* Input Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-700">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <div className={styles.card}>
+                    <h2 className={styles.cardTitle}>
                         Name Criteria
                     </h2>
 
-                    <div className="space-y-6">
+                    <div>
                         {/* Criteria Input */}
-                        <div>
-                            <label htmlFor="criteria" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <div className={styles.formGroup}>
+                            <label htmlFor="criteria" className={styles.label}>
                                 Describe the type of name you need:
                             </label>
                             <textarea
                                 id="criteria"
                                 rows={3}
-                                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors resize-none"
+                                className={styles.textarea}
                                 placeholder="e.g., Mysterious elven names for a forest guardian, Strong dwarven names for a blacksmith, Futuristic robot names for a spaceship AI..."
                                 value={criteria}
                                 onChange={(e) => setCriteria(e.target.value)}
@@ -125,15 +116,15 @@ export default function GeneratePage() {
                         </div>
 
                         {/* Settings Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className={styles.settingsGrid}>
                             {/* Word Count */}
                             <div>
-                                <label htmlFor="wordCount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label htmlFor="wordCount" className={styles.label}>
                                     Words per Name
                                 </label>
                                 <select
                                     id="wordCount"
-                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors"
+                                    className={styles.select}
                                     value={wordCount}
                                     onChange={(e) => setWordCount(e.target.value as 'any' | 1 | 2 | 3)}
                                     disabled={isLoading}
@@ -147,7 +138,7 @@ export default function GeneratePage() {
 
                             {/* Name Count */}
                             <div>
-                                <label htmlFor="count" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label htmlFor="count" className={styles.label}>
                                     Number of Names
                                 </label>
                                 <input
@@ -156,7 +147,7 @@ export default function GeneratePage() {
                                     value={count}
                                     min="1"
                                     max="10"
-                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors"
+                                    className={styles.input}
                                     onChange={(e) => setCount(Math.min(10, Math.max(1, parseInt(e.target.value) || 1)))}
                                     disabled={isLoading}
                                 />
@@ -164,12 +155,12 @@ export default function GeneratePage() {
 
                             {/* Name Style */}
                             <div>
-                                <label htmlFor="nameStyle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label htmlFor="nameStyle" className={styles.label}>
                                     Name Style
                                 </label>
                                 <select
                                     id="nameStyle"
-                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors"
+                                    className={styles.select}
                                     value={nameStyle}
                                     onChange={(e) => setNameStyle(e.target.value)}
                                     disabled={isLoading}
@@ -188,14 +179,14 @@ export default function GeneratePage() {
 
                         {/* Custom Style Input */}
                         {nameStyle === 'custom' && (
-                            <div>
-                                <label htmlFor="customStyle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <div className={styles.formGroup}>
+                                <label htmlFor="customStyle" className={styles.label}>
                                     Custom Style Description
                                 </label>
                                 <input
                                     type="text"
                                     id="customStyle"
-                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors"
+                                    className={styles.input}
                                     placeholder="e.g., names that sound ancient and mysterious"
                                     value={customStyle}
                                     onChange={(e) => setCustomStyle(e.target.value)}
@@ -208,11 +199,11 @@ export default function GeneratePage() {
                         <button
                             onClick={generateNames}
                             disabled={isLoading || !criteria.trim()}
-                            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center"
+                            className={styles.button}
                         >
                             {isLoading ? (
                                 <>
-                                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                                    <div className={styles.spinner}></div>
                                     Generating Names...
                                 </>
                             ) : (
@@ -223,40 +214,36 @@ export default function GeneratePage() {
                 </div>
 
                 {/* Results Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <div className={styles.card}>
+                    <h2 className={styles.cardTitle}>
                         Generated Names
                     </h2>
 
                     {/* Error Display */}
                     {error && (
-                        <div className="bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 px-4 py-3 rounded-lg mb-6">
-                            <strong className="font-bold">Error: </strong>
-                            <span>{error}</span>
+                        <div className={styles.error}>
+                            <strong>Error: </strong>
+                            {error}
                         </div>
                     )}
 
                     {/* Results Grid */}
                     {results.length > 0 && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className={styles.resultsGrid}>
                             {results.map((name, index) => (
                                 <div
                                     key={index}
-                                    className="relative group"
+                                    className={styles.resultCard}
+                                    onClick={() => handleCopy(name)}
                                 >
-                                    <div
-                                        onClick={() => handleCopy(name)}
-                                        className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-3 rounded-lg cursor-pointer transition-all duration-200 hover:bg-blue-200 dark:hover:bg-blue-800 hover:shadow-md"
-                                    >
-                                        <div className="flex justify-between items-center">
-                                            <span className="font-medium">{name}</span>
-                                            <span className="text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                {copiedName === name ? '✅' : '📋'}
-                                            </span>
-                                        </div>
+                                    <div className={styles.resultName}>
+                                        {name}
+                                    </div>
+                                    <div className={styles.copyIcon}>
+                                        {copiedName === name ? '✓' : '📋'}
                                     </div>
                                     {copiedName === name && (
-                                        <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full shadow-lg animate-pulse">
+                                        <div className={styles.copiedBadge}>
                                             Copied!
                                         </div>
                                     )}
@@ -267,9 +254,9 @@ export default function GeneratePage() {
 
                     {/* Empty State */}
                     {!isLoading && !error && results.length === 0 && (
-                        <div className="text-center py-12 text-gray-500 dark:text-gray-400">
-                            <div className="text-6xl mb-4">✨</div>
-                            <p className="text-lg">
+                        <div className={styles.emptyState}>
+                            <div className={styles.emptyIcon}>✨</div>
+                            <p>
                                 {criteria.trim() 
                                     ? "Ready to generate some amazing names!" 
                                     : "Enter your criteria above to generate unique fantasy names"
@@ -280,9 +267,9 @@ export default function GeneratePage() {
 
                     {/* Loading State */}
                     {isLoading && (
-                        <div className="text-center py-12">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                            <p className="text-gray-600 dark:text-gray-400">AI is creating unique names for you...</p>
+                        <div className={styles.loadingState}>
+                            <div className={styles.loadingSpinner}></div>
+                            <p>AI is creating unique names for you...</p>
                         </div>
                     )}
                 </div>

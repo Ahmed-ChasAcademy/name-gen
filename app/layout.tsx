@@ -1,7 +1,9 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import SavedNames from './components/SavedNames/SavedNames';
+import { NameProvider } from './contexts/NameContext';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -16,12 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+      <body>
+        <NameProvider>
+          <Header />
+          <main>{children}</main>
+          <SavedNames />
+          <Footer />
+        </NameProvider>
       </body>
     </html>
   );
