@@ -120,7 +120,7 @@ export default function Header() {
                 <span className="text-white font-bold text-sm">FN</span>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover:from-purple-600 group-hover:to-blue-600 transition-all duration-300">
-                FantasyNames
+                PyreWorks
               </span>
             </Link>
           </div>
