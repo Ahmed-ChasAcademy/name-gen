@@ -26,7 +26,7 @@ export default function Home() {
           
           <div className={styles.buttonGroup}>
             <a 
-              href="/names/elf-names" 
+              href="/browse" 
               className={styles.primaryButton}
             >
               Browse Names
